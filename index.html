@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan Persahabatan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Merriweather:ital,wght@1,300&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- ESTILOS GENERALES (CSS) --- */
+        
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; 
+            font-family: 'Merriweather', serif;
+        }
+
+        body {
+            /* 1. LATAR BELAKANG (Desktop/Tablet) */
+            background-image: url('https://i.pinimg.com/736x/fd/67/fe/fd67feb9dcd561338847e4ad91478c03.jpg'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* --- MEDIA QUERY (Móvil) --- */
+        @media (max-width: 768px) {
+            body {
+                background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQidnxqyX9V4Xx9kV8L_n6NkWYy92wD9CKqrqBzAMOY8Pjzlc1s112O3hvn&s=10');
+                background-size: cover;
+                background-position: center;
+            }
+            #envelope-container svg { width: 50vw; height: 50vw; }
+            .cta-sign h2 { font-size: 0.8em; }
+            .cta-sign p { font-size: 1em; }
+            #note-container { 
+                width: 90vw; 
+                height: 85vh; 
+                padding: 20px; 
+            }
+
+            /* PENYESUAIAN TEKS DI PONSIL */
+            .quote { font-size: 1.3em; } 
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* --- ADEGAN 1: AMPLOP (SVG RESPONSIVE) --- */
+
+        #envelope-container {
+            position: relative;
+            text-align: center;
+            cursor: pointer;
+            z-index: 20;
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        #envelope-container svg {
+            width: 300px; 
+            height: 300px;
+            max-width: 80vw;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
+            animation: pulse 4s infinite ease-in-out; 
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .cta-sign {
+            background-color: #3a2a3f;
+            color: #d1d1d1;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 3px solid #6b5a70;
+            text-align: center;
+            margin-top: 20px;
+            display: inline-block;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .cta-sign h2 { margin: 0; font-size: 1em; color: #f0c04a; letter-spacing: 1px; }
+        .cta-sign p { margin: 5px 0 0; font-size: 1.2em; font-weight: bold; }
+
+        /* --- ADEGAN 2: CATATAN --- */
+
+        #note-container {
+            position: relative;
+            width: 500px;
+            max-width: 90vw;
+            height: 700px;
+            max-height: 80vh;
+            background-color: #f7f7f7; 
+            
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+            padding: 40px;
+            box-sizing: border-box; 
+            z-index: 30;
+            
+            display: none;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 0.5s ease-in, transform 0.5s ease-in;
+        }
+
+        #note-container.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Elemen di dalam catatan */
+        .note-element { opacity: 0; transition: all 0.7s ease-out; }
+
+        .paperclip { 
+            position: absolute; top: -30px; left: 50%; 
+            transform: translateX(-50%) rotate(-5deg); 
+            width: 100px; z-index: 32; 
+        }
+
+        .movie-clip {
+            width: 100%;
+            height: 180px; 
+            background-color: #333; 
+            border: 8px solid #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 31;
+            transform: translateY(-20px);
+            object-fit: cover; 
+        }
+
+        .text-content { margin-top: 20px; color: #333; text-align: center; }
+
+        .quote {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2em; 
+            color: #000;
+            line-height: 1.4;
+            transform: translateY(20px);
+            margin-bottom: 0; 
+        }
+
+        .invitation {
+            display: none; 
+        }
+
+        /* --- Animasi Masuk --- */
+        #note-container.show .movie-clip, #note-container.show .paperclip {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.5s; 
+        }
+
+        #note-container.show .quote {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 1.0s; 
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div id="envelope-container">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <rect x="10" y="25" width="80" height="50" rx="4" ry="4" fill="#ffffff" stroke="#cccccc" stroke-width="2"/>
+                <polygon points="10,25 50,55 90,25" fill="#ffffff" stroke="#cccccc" stroke-width="2"/>
+                <path d="M50 50 C 47 45, 40 45, 40 50 C 40 55, 50 62, 50 62 C 50 62, 60 55, 60 50 C 60 45, 53 45, 50 50 Z"
+                      fill="#e63946" stroke="#b71c1c" stroke-width="1"/>
+            </svg>
+            <div class="cta-sign">
+                <h2>TRIK ATAU TRAKTIR!</h2>
+                <p>CARI TAHU</p>
+            </div>
+        </div>
+
+        <div id="note-container">
+            <img src="https://i.postimg.cc/zX45Z2g9/Pngtree-funny-halloween-ghost-sublimation-clipart-16227600.png" alt="Paperclip" class="note-element paperclip">
+
+            <img src="https://i.postimg.cc/8z7NfQhv/tim-burton-corpse-bride.gif" alt="Klip Pengantin Mayat" class="note-element movie-clip">
+            
+            <div class="text-content">
+                <p class="note-element quote">
+                    "Katanya sahabat itu bersama hingga akhir. Mau kita mulai keabadian hari ini, Mala?"
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const envelope = document.getElementById('envelope-container');
+        const note = document.getElementById('note-container');
+
+        function openInvitation() {
+            envelope.style.opacity = '0';
+            envelope.style.transform = 'scale(0.5)';
+
+            setTimeout(() => {
+                envelope.style.display = 'none';
+
+                note.style.display = 'block';
+
+                setTimeout(() => {
+                    note.classList.add('show');
+                }, 50);
+
+            }, 500); 
+        }
+
+        envelope.addEventListener('click', openInvitation);
+    </script>
+
+</body>
+</html>
